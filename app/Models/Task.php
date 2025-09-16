@@ -9,4 +9,23 @@ class Task extends Model
 {
     /** @use HasFactory<\Database\Factories\TaskFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'title',
+        'description',
+        'due_date',
+        'priority',
+        'completed',
+        'user_id',
+    ];
+
+    public $casts = [
+        'completed' => 'boolean',
+        'due_date' => 'date'
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

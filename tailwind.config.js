@@ -13,6 +13,10 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                barcode: ['"Libre Barcode 128 Text"', 'sans-serif'],
+                abril: ['"Abril Fatface"', 'cursive'],
+                montserrat: ['"Montserrat"', 'sans-serif'],
+                poppins: ['"Poppins"', 'sans-serif'],
             },
         },
     },
