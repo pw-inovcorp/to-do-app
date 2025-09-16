@@ -26,7 +26,7 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:50',
+            'title' => 'required|string|max:50|min:3',
             'description' => 'nullable|string',
             'due_date' => 'nullable|date',
             'priority' => 'required|in:low,medium,high',
@@ -60,7 +60,7 @@ class TaskController extends Controller
         }
 
         $request->validate([
-            'title' => 'required|string|max:50',
+            'title' => 'required|string|max:50|min:3',
             'description' => 'nullable|string',
             'due_date' => 'nullable|date',
             'priority' => 'required|in:low,medium,high',
@@ -80,5 +80,16 @@ class TaskController extends Controller
         $task->delete();
 
         return redirect()->route('tasks.index')->with('success', 'Tarefa eliminada');
+    }
+
+    public function toggle(Task $task)
+    {
+        if ($task->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $task->update(['completed' => !$task->completed]);
+
+        return redirect()->route('tasks.index');
     }
 }
