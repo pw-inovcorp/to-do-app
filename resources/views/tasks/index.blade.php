@@ -14,8 +14,85 @@
     <div class="py-12">
         <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
             <div class="space-y-4">
+                <div class="bg-white rounded-lg border border-gray-200 p-4 shadow-sm mb-6">
+                    <form method="GET" action="{{ route('tasks.index') }}" class="space-y-4 md:space-y-0 md:flex md:items-end md:space-x-4">
+
+                        <div class="flex-1">
+                            <x-input-label for="status" value="Estado" />
+                            <select name="status" id="status" class="w-full border-gray-300 rounded-md shadow-md">
+                                <option value="">Todos os estados</option>
+                                <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>
+                                    Pendentes
+                                </option>
+                                <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>
+                                    Concluídas
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="flex-1">
+                            <x-input-label for="priority" value="Prioridade" />
+                            <select name="priority" id="priority" class="w-full border-gray-300 rounded-md shadow-md">
+                                <option value="">Todas as prioridades</option>
+                                <option value="high" {{ request('priority') == 'high' ? 'selected' : '' }}>
+                                    Alta
+                                </option>
+                                <option value="medium" {{ request('priority') == 'medium' ? 'selected' : '' }}>
+                                    Média
+                                </option>
+                                <option value="low" {{ request('priority') == 'low' ? 'selected' : '' }}>
+                                    Baixa
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="flex-1">
+                            <x-input-label for="date_filter" value="Data (Vencimento)" />
+                            <select name="date_filter" id="date_filter" class="w-full border-gray-300 rounded-md shadow-md">
+                                <option value="">Todas as datas</option>
+                                <option value="overdue" {{ request('date_filter') == 'overdue' ? 'selected' : '' }}>
+                                    Vencidas
+                                </option>
+                                <option value="today" {{ request('date_filter') == 'today' ? 'selected' : '' }}>
+                                    Hoje
+                                </option>
+                                <option value="week" {{ request('date_filter') == 'week' ? 'selected' : '' }}>
+                                    Esta semana
+                                </option>
+                                <option value="no_date" {{ request('date_filter') == 'no_date' ? 'selected' : '' }}>
+                                    Sem data
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="flex-1">
+                            <x-input-label for="search" value="Pesquisar" />
+                            <x-text-input name="search"
+                                          id="search"
+                                          value="{{ request('search') }}"
+                                          placeholder="Título ou descrição..." class="w-full"/>
+                        </div>
+
+                        <div class="space-x-2">
+                            <x-primary-button type="submit">
+                                Filtrar
+                            </x-primary-button>
+
+                            <x-link-button href="{{ route('tasks.index') }}">
+                                Limpar
+                            </x-link-button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="mb-4">
+                    <p class="text-sm text-gray-600">
+                        Mostrando {{ $tasks->count() }} tarefa(s)
+                    </p>
+                </div>
+
                 @forelse($tasks as $task)
-                    <div class="bg-white rounded-lg border border-gray-200 p-4 shadow-sm">
+                    <div class="bg-white rounded-lg border border-gray-200 p-4 shadow-md">
                         <div class="flex items-start gap-3">
 
                             <form action="{{ route('tasks.toggle', $task) }}" method="POST">
@@ -133,7 +210,7 @@
                     <p id="task-due-date" class="text-sm"></p>
                 </div>
 
-                <div class="border-t pt-4 text-xs text-gray-500">
+                <div class="border-t pt-4 text-sm text-gray-500">
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <span>Criada: </span>

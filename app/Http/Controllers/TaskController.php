@@ -8,10 +8,55 @@ use App\Models\Task;
 class TaskController extends Controller
 {
     //
-    public function index()
+    public function index(Request $request)
     {
-        $tasks = Task::where('user_id', auth()->id())
-            ->orderBy('due_date', 'asc')
+        $query = Task::where('user_id', auth()->id());
+
+        if ($request->filled('status')) {
+            if ($request->status === 'pending') {
+                $query->where('completed', false);
+            } elseif ($request->status === 'completed') {
+                $query->where('completed', true);
+            }
+        }
+
+        if ($request->filled('priority')) {
+            $query->where('priority', $request->priority);
+        }
+
+        if ($request->filled('search')) {
+            $searchTerm = $request->search;
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('title', 'like', "%{$searchTerm}%")
+                    ->orWhere('description', 'like', "%{$searchTerm}%");
+            });
+        }
+
+        if ($request->filled('date_filter')) {
+            switch ($request->date_filter) {
+                case 'overdue':
+                    $query->where('due_date', '<', now()->toDateString())
+                        ->where('completed', false);
+                    break;
+
+                case 'today':
+                    $query->whereDate('due_date', now()->toDateString());
+                    break;
+
+                case 'week':
+                    $query->whereBetween('due_date', [
+                        now()->startOfWeek()->toDateString(),
+                        now()->endOfWeek()->toDateString()
+                    ]);
+                    break;
+
+                case 'no_date':
+                    $query->whereNull('due_date');
+                    break;
+            }
+        }
+
+        $tasks = $query->orderBy('due_date', 'asc')
             ->orderBy('created_at', 'desc')
             ->get();
 
