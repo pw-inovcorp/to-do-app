@@ -18,6 +18,26 @@ class TaskController extends Controller
         return view('tasks/index', ['tasks' => $tasks]);
     }
 
+    public function show(Task $task)
+    {
+        if ($task->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        return response()->json([
+            'id' => $task->id,
+            'title' => $task->title,
+            'description' => $task->description,
+            'due_date' => $task->due_date ? $task->due_date->format('d/m/Y') : null,
+            'priority' => $task->priority,
+            'priority_label' => ucfirst($task->priority),
+            'completed' => $task->completed,
+            'completed_text' => $task->completed ? 'Concluída' : 'Pendente',
+            'created_at' => $task->created_at->format('d/m/Y H:i'),
+            'updated_at' => $task->updated_at->format('d/m/Y H:i'),
+        ]);
+    }
+
     public function create()
     {
         return view('tasks/create');
