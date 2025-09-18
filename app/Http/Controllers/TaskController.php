@@ -58,7 +58,8 @@ class TaskController extends Controller
 
         $tasks = $query->orderBy('due_date', 'asc')
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->paginate(2)
+            ->appends($request->query());
 
         return view('tasks/index', ['tasks' => $tasks]);
     }

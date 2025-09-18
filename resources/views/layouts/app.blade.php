@@ -15,7 +15,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="font-montserrat">
-    <div class="min-h-screen bg-gray-100 dark:bg-gray-900 flex">
+    <div class="min-h-screen bg-gray-50 dark:bg-gray-900 flex">
 
         <div class="w-56 bg-white dark:bg-gray-800 shadow-lg h-screen sticky top-0">
             @include('layouts.sidebar')

@@ -12,9 +12,9 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="space-y-4">
-                <div class="bg-white rounded-lg border border-gray-200 p-4 shadow-sm mb-6">
+                <div class="bg-white rounded border border-gray-200 p-8 shadow-sm mb-6">
                     <form method="GET" action="{{ route('tasks.index') }}" class="space-y-4 md:space-y-0 md:flex md:items-end md:space-x-4">
 
                         <div class="flex-1">
@@ -86,9 +86,11 @@
                 </div>
 
                 <div class="mb-4">
-                    <p class="text-sm text-gray-600">
-                        Mostrando {{ $tasks->count() }} tarefa(s)
-                    </p>
+                    @if(!$tasks->hasPages())
+                        <p class="text-sm text-gray-600">
+                            Mostrando {{ $tasks->count() }} tarefa(s)
+                        </p>
+                    @endif
                 </div>
 
                 @forelse($tasks as $task)
@@ -111,7 +113,7 @@
 
                                 @if($task->description)
                                     <p class="text-sm text-gray-600 mt-1">
-                                        {{ $task->description }}
+                                        {{ Str::limit($task->description, 100) }}
                                     </p>
                                 @endif
 
@@ -173,6 +175,12 @@
                     </div>
                 @endforelse
             </div>
+
+            @if($tasks->hasPages())
+                <div class="mt-6">
+                    {{ $tasks->links() }}
+                </div>
+            @endif
         </div>
     </div>
 

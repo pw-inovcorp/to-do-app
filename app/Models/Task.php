@@ -28,4 +28,25 @@ class Task extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+
+    public static function totalTasks()
+    {
+        return Task::all()->count();
+    }
+
+    public static function finishedTasks()
+    {
+        return Task::where('completed', true)->get()->count();
+    }
+
+    public static function unfinishedTasks()
+    {
+        return Task::where('completed', false)->get()->count();
+    }
+
+    public static function overdueTasks()
+    {
+        return Task::where('due_date', '<', now()->toDateString())->get()->count();
+    }
 }

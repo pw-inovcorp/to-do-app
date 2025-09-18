@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="bg-white rounded-lg border border-gray-200 p-6 shadow-md">
                 <form action="{{ route('tasks.update', $task) }}" method="POST">
                     @csrf
