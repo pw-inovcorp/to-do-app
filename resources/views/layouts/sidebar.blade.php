@@ -17,7 +17,7 @@
             </li>
             <li>
                 <a href="{{route('tasks.index')}}"
-                   class="text-gray-600 hover:bg-gray-100 block px-3 py-2 rounded-md text-sm font-medium">
+                   class="{{ request()->routeIs('tasks.index') ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-100' }} block px-3 py-2 rounded-md text-sm font-medium">
                     Todas as Tarefas
                 </a>
             </li>

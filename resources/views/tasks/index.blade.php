@@ -73,7 +73,7 @@
                                           placeholder="Título ou descrição..." class="w-full"/>
                         </div>
 
-                        <div class="space-x-2">
+                        <div class="flex-1 flex space-x-2">
                             <x-primary-button type="submit">
                                 Filtrar
                             </x-primary-button>

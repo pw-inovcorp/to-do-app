@@ -29,7 +29,6 @@ class Task extends Model
         return $this->belongsTo(User::class);
     }
 
-
     public static function totalTasks()
     {
         return Task::all()->count();

@@ -11,12 +11,11 @@
 
             <div class="grid grid-cols-1 p-4 md:grid-cols-2 lg:grid-cols-4 gap-4">
 
-                {{-- Total de Tarefas --}}
                 <div class="bg-blue-50 rounded-lg p-6 border border-blue-100">
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-blue-600 text-sm font-medium">Total de tarefas</p>
-                            <p class="text-blue-900 text-3xl font-bold mt-2">{{App\Models\Task::totalTasks()}}</p>
+                            <p class="text-blue-900 text-3xl font-bold mt-2">{{$totalTasks}}</p>
                             <p class="text-gray-500 text-xs mt-1">Todas as suas tarefas</p>
                         </div>
                         <div class="p-3 bg-blue-100 rounded-lg">
@@ -31,7 +30,7 @@
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-green-600 text-sm font-medium">Concluídas</p>
-                            <p class="text-green-900 text-3xl font-bold mt-2">{{App\Models\Task::finishedTasks()}}</p>
+                            <p class="text-green-900 text-3xl font-bold mt-2">{{$finishedTasks}}</p>
                             <p class="text-gray-500 text-xs mt-1">
                                 Tarefas concluídas
                             </p>
@@ -48,7 +47,7 @@
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-yellow-600 text-sm font-medium">Pendentes</p>
-                            <p class="text-yellow-900 text-3xl font-bold mt-2">{{App\Models\Task::unfinishedTasks()}}</p>
+                            <p class="text-yellow-900 text-3xl font-bold mt-2">{{$unfinishedTasks}}</p>
                             <p class="text-gray-500 text-xs mt-1">Para completar</p>
                         </div>
                         <div class="p-3 bg-yellow-100 rounded-lg">
@@ -63,7 +62,7 @@
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-red-600 text-sm font-medium">Vencidas</p>
-                            <p class="text-red-900 text-3xl font-bold mt-2">{{App\Models\Task::overdueTasks()}}</p>
+                            <p class="text-red-900 text-3xl font-bold mt-2">{{$overdueTasks}}</p>
                             <p class="text-gray-500 text-xs mt-1">Precisam atenção</p>
                         </div>
                         <div class="p-3 bg-red-100 rounded-lg">
@@ -79,7 +78,29 @@
 
                 <div class="bg-white rounded-lg border border-gray-200 mt-8">
                     <div class="p-8">
-                        <h3 class="text-lg font-medium  mb-4">Ações Rápidas</h3>
+                        <h3 class="text-lg font-medium mb-4">Ações Rápidas</h3>
+
+                        <a href="{{ route('tasks.index') }}"
+                           class="flex items-center p-3 rounded-lg bg-gray-50 hover:bg-gray-100 mb-4">
+                            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
+                            </svg>
+                            <div class="ml-3">
+                                <p class="text-sm font-medium">Ver Todas as Tarefas</p>
+                                <p class="text-sm text-gray-500">Visualizar e gerir todas as tarefas</p>
+                            </div>
+                        </a>
+
+                        <a href="{{ route('tasks.create') }}"
+                           class="flex items-center p-3 rounded-lg bg-indigo-50 hover:bg-indigo-100">
+                            <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                            </svg>
+                            <div class="ml-3">
+                                <p class="text-sm font-medium ">Criar Nova Tarefa</p>
+                                <p class="text-sm text-gray-500">Adicionar uma nova tarefa à sua lista</p>
+                            </div>
+                        </a>
 
                     </div>
                 </div>
@@ -88,8 +109,25 @@
 
                 <div class="bg-white rounded-lg border border-gray-200 mt-8">
                     <div class="p-8">
-                        <h3 class="text-lg font-medium  mb-4">Ações Rápidas</h3>
+                        <h3 class="text-lg font-medium  mb-4">Tarefas Recentes</h3>
+                        <div class="space-y-3">
 
+                            @if($tasks->count() > 0)
+                                <ul class="list-disc list-inside space-y-6 text-sm">
+                                    @foreach($tasks as $task)
+                                        <li>{{ Str::limit($task->title, 40) }}</li>
+                                    @endforeach
+                                </ul>
+
+                            @else
+                                <p class="text-sm text-gray-500">
+                                    Nenhuma tarefa criada.
+                                    <a href="{{ route('tasks.create') }}" class="text-indigo-600 hover:text-indigo-700">
+                                        Criar agora
+                                    </a>
+                                </p>
+                            @endif
+                        </div>
                     </div>
                 </div>
 
