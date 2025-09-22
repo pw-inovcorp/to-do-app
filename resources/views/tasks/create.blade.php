@@ -5,9 +5,9 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-6 sm:py-12">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-white rounded-lg border border-gray-200 p-6 shadow-md">
+            <div class="bg-white rounded-lg border border-gray-200 p-4 sm:p-6 shadow-md">
                 <form action="{{ route('tasks.store') }}" method="POST">
                     @csrf
 
@@ -25,7 +25,6 @@
                         <x-input-error :messages="$errors->get('description')" class="mt-1" />
                     </div>
 
-                    <!-- Data e Prioridade -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                         <div>
                             <label class="block text-sm font-medium mb-2">Data de vencimento</label>
@@ -46,12 +45,12 @@
                         </div>
                     </div>
 
-                    <div class="flex gap-3">
-                        <x-primary-button class="bg-indigo-600 hover:bg-indigo-700 text-white">
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <x-primary-button class="bg-indigo-600 hover:bg-indigo-700 text-white justify-center">
                             Criar Tarefa
                         </x-primary-button>
 
-                        <x-link-button href="{{ route('tasks.index') }}">
+                        <x-link-button href="{{ route('tasks.index') }}" class="justify-center">
                             Cancelar
                         </x-link-button>
                     </div>
@@ -60,3 +59,4 @@
         </div>
     </div>
 </x-app-layout>
+
