@@ -108,12 +108,9 @@
                         <div class="space-y-3">
 
                             @if($tasks->count() > 0)
-                                <ul class="space-y-4 text-sm">
+                                <ul class="list-disc list-inside space-y-6 text-sm">
                                     @foreach($tasks as $task)
-                                        <li class="flex items-start gap-2">
-                                            <span class="text-indigo-600 mt-1 flex-shrink-0">•</span>
-                                            <span class="break-words">{{ Str::limit($task->title, 40) }}</span>
-                                        </li>
+                                        <li>{{ Str::limit($task->title, 40) }}</li>
                                     @endforeach
                                 </ul>
 
