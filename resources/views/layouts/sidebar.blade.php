@@ -2,8 +2,8 @@
 
     <div class="mb-8">
         <a href="{{ route('dashboard') }}" class="flex items-center gap-3">
-            <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
-            <span class="text-xl font-abril text-gray-800 dark:text-gray-200">TO-DO APP</span>
+            <x-application-logo class="block h-9 w-auto fill-current text-gray-800 " />
+            <span class="text-xl font-abril text-gray-800 ">TO-DO APP</span>
         </a>
     </div>
 

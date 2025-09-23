@@ -15,7 +15,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="font-montserrat">
-    <div class="min-h-screen bg-gray-50 dark:bg-gray-900 flex">
+    <div class="min-h-screen bg-gray-50 flex">
 
         <button id="mobile-menu-btn" class="lg:hidden fixed top-4 left-4 z-50 p-2 bg-white rounded-md shadow-lg">
             <svg class="w-6 h-6 text-gray-600 " fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -26,7 +26,7 @@
         <div id="sidebar-overlay" class="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
 
 
-        <div id="sidebar" class="fixed lg:sticky lg:top-0 w-56 bg-white dark:bg-gray-800 shadow-lg h-full lg:min-h-screen transform -translate-x-full lg:translate-x-0 transition-transform duration-300 z-40">
+        <div id="sidebar" class="fixed lg:sticky lg:top-0 w-56 bg-white  shadow-lg h-full lg:min-h-screen transform -translate-x-full lg:translate-x-0 transition-transform duration-300 z-40">
             @include('layouts.sidebar')
         </div>
 
@@ -34,7 +34,7 @@
         <div class="flex-1">
             <!-- Page Heading -->
             @isset($header)
-                <header class="bg-white dark:bg-gray-800 shadow">
+                <header class="bg-white shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         <div class="pl-12 lg:pl-0">
                             {{ $header }}
@@ -45,6 +45,11 @@
 
             <!-- Page Content -->
             <main>
+                @if(session()->has('success'))
+                    <div class="mx-3 sm:mx-4 lg:mx-8 mt-4 p-4 border-l-4 bg-green-50 border-green-400 text-green-700">
+                        {{session('success')}}
+                    </div>
+                @endif
                 {{ $slot }}
             </main>
         </div>

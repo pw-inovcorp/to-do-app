@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
@@ -110,7 +110,10 @@
                             @if($tasks->count() > 0)
                                 <ul class="list-disc list-inside space-y-6 text-sm">
                                     @foreach($tasks as $task)
-                                        <li>{{ Str::limit($task->title, 40) }}</li>
+                                        <li class="cursor-pointer hover:text-indigo-600 transition-colors"
+                                            onclick="showTaskModal({{ $task->id }})">
+                                            {{ Str::limit($task->title, 40) }}
+                                        </li>
                                     @endforeach
                                 </ul>
 
@@ -130,4 +133,6 @@
 
         </div>
     </div>
+    {{--Component Modal--}}
+    <x-task-modal />
 </x-app-layout>

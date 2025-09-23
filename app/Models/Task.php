@@ -31,21 +31,28 @@ class Task extends Model
 
     public static function totalTasks()
     {
-        return Task::all()->count();
+        return static::where('user_id', auth()->id())->count();
     }
 
     public static function finishedTasks()
     {
-        return Task::where('completed', true)->get()->count();
+        return static::where('user_id', auth()->id())
+            ->where('completed', true)
+            ->count();
     }
 
     public static function unfinishedTasks()
     {
-        return Task::where('completed', false)->get()->count();
+        return static::where('user_id', auth()->id())
+            ->where('completed', false)
+            ->count();
     }
 
     public static function overdueTasks()
     {
-        return Task::where('due_date', '<', now()->toDateString())->get()->count();
+        return static::where('user_id', auth()->id())
+            ->where('due_date', '<', now()->toDateString())
+            ->where('completed', false)
+            ->count();
     }
 }
