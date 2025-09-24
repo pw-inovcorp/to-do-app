@@ -15,7 +15,9 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="space-y-4">
                 <div class="bg-white rounded border border-gray-200 p-8 shadow-sm mb-6">
-                    <form method="GET" action="{{ route('tasks.index') }}" class="space-y-4 md:space-y-0 md:flex md:items-end md:space-x-4">
+                    <form method="GET"
+                          action="{{ route('tasks.index') }}"
+                          class="space-y-4 md:space-y-0 md:flex md:items-end md:space-x-4">
 
                         <div class="flex-1">
                             <x-input-label for="status" value="Estado" />
@@ -97,17 +99,17 @@
                     <div class="bg-white rounded-lg border border-gray-200 p-4 shadow-md">
                         <div class="flex items-start gap-3">
 
-                            <form action="{{ route('tasks.toggle', $task) }}" method="POST">
+                            <form id="task-form-{{ $task->id }}" action="{{ route('tasks.toggle', $task) }}" method="POST">
                                 @csrf
                                 @method('PATCH')
                                 <input type="checkbox"
                                        {{ $task->completed ? 'checked' : '' }}
-                                       onchange="this.form.submit()"
+                                       onclick="toggleTask(event, {{ $task->id }})"
                                        class="w-4 h-4 mt-1 rounded">
                             </form>
 
                             <div class="flex-1">
-                                <h3 class="font-semibold  {{ $task->completed ? 'line-through text-gray-500' : '' }}">
+                                <h3 id="task-title-{{ $task->id }}" class="font-semibold  {{ $task->completed ? 'line-through text-gray-500' : '' }}">
                                     {{ $task->title }}
                                 </h3>
 
@@ -186,4 +188,42 @@
 
     {{--Component Modal--}}
     <x-task-modal />
+
+    <script>
+        function toggleTask(event, taskId) {
+            event.preventDefault();
+
+            const form = document.getElementById('task-form-' + taskId);
+            const checkbox = form.querySelector('input[type="checkbox"]');
+            const title = document.getElementById('task-title-' + taskId);
+
+            checkbox.disabled = true;
+
+            fetch(form.action, {
+                method: 'PATCH',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+                .then(res => res.json())
+                .then(data => {
+                    checkbox.checked = data.completed;
+
+                    if (data.completed) {
+                        title.classList.add('line-through', 'text-gray-500');
+                    } else {
+                        title.classList.remove('line-through', 'text-gray-500');
+                    }
+
+                    checkbox.disabled = false;
+                })
+                .catch(err => {
+                    console.error(err);
+                    checkbox.disabled = false;
+                });
+
+            return false;
+        }
+    </script>
 </x-app-layout>

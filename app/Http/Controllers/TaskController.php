@@ -156,6 +156,12 @@ class TaskController extends Controller
 
         $task->update(['completed' => !$task->completed]);
 
+        if (request()->wantsJson() || request()->ajax()) {
+            return response()->json([
+                'completed' => $task->completed
+            ]);
+        }
+
         return redirect()->route('tasks.index');
     }
 }
