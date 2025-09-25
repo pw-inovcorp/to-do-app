@@ -15,7 +15,7 @@ class DashboardController extends Controller
         $unfinishedTasks = Task::unfinishedTasks();
         $overdueTasks = Task::overdueTasks();
 
-        return view('/dashboard', [
+        return view('dashboard', [
             'tasks' => $tasks,
             'totalTasks' => $totalTasks,
             'finishedTasks' => $finishedTasks,

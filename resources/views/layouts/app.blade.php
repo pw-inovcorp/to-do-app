@@ -31,7 +31,7 @@
         </div>
 
         <!-- Main Content -->
-        <div class="flex-1">
+        <div class="flex-1 flex flex-col min-h-screen">
             <!-- Page Heading -->
             @isset($header)
                 <header class="bg-white shadow">
@@ -44,7 +44,7 @@
             @endisset
 
             <!-- Page Content -->
-            <main>
+            <main class="flex-1">
                 @if(session()->has('success'))
                     <div class="mx-3 sm:mx-4 lg:mx-8 mt-4 p-4 border-l-4 bg-green-50 border-green-400 text-green-700">
                         {{session('success')}}
@@ -52,6 +52,10 @@
                 @endif
                 {{ $slot }}
             </main>
+
+            <footer class="mt-auto text-center text-xs text-gray-500 p-4">
+                &copy; {{ date('Y') }} TO-DO-APP PEDRO_WANG
+            </footer>
         </div>
     </div>
 
