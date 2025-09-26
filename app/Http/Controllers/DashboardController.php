@@ -9,7 +9,11 @@ class DashboardController extends Controller
     //
     public function index()
     {
-        $tasks = Task::latest()->take(3)->get();
+        $tasks = Task::where('user_id', auth()->id())
+            ->latest()
+            ->take(3)
+            ->get();
+
         $totalTasks = Task::totalTasks();
         $finishedTasks = Task::finishedTasks();
         $unfinishedTasks = Task::unfinishedTasks();
