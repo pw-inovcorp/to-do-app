@@ -20,13 +20,24 @@ Route::middleware('auth',)->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
 
-Route::get('/admin-clear', function() {
-    Artisan::call('cache:clear');
-    Artisan::call('config:clear');
-    Artisan::call('route:clear');
-    Artisan::call('view:clear');
+Route::get('/db-debug', function() {
+    try {
+        $connection = DB::connection()->getPdo();
 
-    return 'Cache limpo com sucesso!';
+        $tables = DB::select('SHOW TABLES');
+
+        $userCount = DB::table('users')->count();
+
+        return response()->json([
+            'connected' => true,
+            'tables' => $tables,
+            'user_count' => $userCount
+        ]);
+    } catch (Exception $e) {
+        return response()->json([
+            'error' => $e->getMessage()
+        ]);
+    }
 });
 
 Route::middleware('auth', 'verified')->group(function () {
