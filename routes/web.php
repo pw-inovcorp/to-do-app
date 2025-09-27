@@ -20,6 +20,15 @@ Route::middleware('auth',)->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
 
+Route::get('/admin-clear', function() {
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('route:clear');
+    Artisan::call('view:clear');
+
+    return 'Cache limpo com sucesso!';
+});
+
 Route::middleware('auth', 'verified')->group(function () {
 
     Route::resource('tasks', TaskController::class);
