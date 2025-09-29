@@ -104,7 +104,7 @@
                                 @method('PATCH')
                                 <input type="checkbox"
                                        {{ $task->completed ? 'checked' : '' }}
-                                       onchange="toggleTask(event, {{ $task->id }})"
+                                       onchange="toggleTask({{ $task->id }})"
                                        class="w-4 h-4 mt-1 rounded">
                             </form>
 
@@ -190,11 +190,16 @@
     <x-task-modal />
 
     <script>
-        function toggleTask(event, taskId) {
-
+        function toggleTask(taskId) {
             const form = document.getElementById('task-form-' + taskId);
             const checkbox = form.querySelector('input[type="checkbox"]');
             const title = document.getElementById('task-title-' + taskId);
+
+            if (checkbox.checked) {
+                title.classList.add('line-through', 'text-gray-500');
+            } else {
+                title.classList.remove('line-through', 'text-gray-500');
+            }
 
             checkbox.disabled = true;
 
@@ -208,21 +213,19 @@
                 .then(res => res.json())
                 .then(data => {
                     checkbox.checked = data.completed;
-
-                    if (data.completed) {
-                        title.classList.add('line-through', 'text-gray-500');
-                    } else {
-                        title.classList.remove('line-through', 'text-gray-500');
-                    }
-
                     checkbox.disabled = false;
                 })
                 .catch(err => {
                     console.error(err);
+                    // Reverte o estado se houver erro
+                    checkbox.checked = !checkbox.checked;
+                    if (checkbox.checked) {
+                        title.classList.add('line-through', 'text-gray-500');
+                    } else {
+                        title.classList.remove('line-through', 'text-gray-500');
+                    }
                     checkbox.disabled = false;
                 });
-
-            return false;
         }
     </script>
 </x-app-layout>
