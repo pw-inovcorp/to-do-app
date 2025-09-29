@@ -54,7 +54,7 @@
             </main>
 
             <footer class="mt-auto text-center text-xs text-gray-500 p-4">
-                &copy; {{ date('Y') }} TO-DO-APP PEDRO_WANG INOVCORP
+                &copy; {{ date('Y') }} P_W
             </footer>
         </div>
     </div>
