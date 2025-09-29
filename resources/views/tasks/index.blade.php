@@ -104,7 +104,7 @@
                                 @method('PATCH')
                                 <input type="checkbox"
                                        {{ $task->completed ? 'checked' : '' }}
-                                       onclick="toggleTask(event, {{ $task->id }})"
+                                       onchange="toggleTask(event, {{ $task->id }})"
                                        class="w-4 h-4 mt-1 rounded">
                             </form>
 
@@ -191,7 +191,6 @@
 
     <script>
         function toggleTask(event, taskId) {
-            event.preventDefault();
 
             const form = document.getElementById('task-form-' + taskId);
             const checkbox = form.querySelector('input[type="checkbox"]');
